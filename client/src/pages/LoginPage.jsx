@@ -20,7 +20,7 @@ const LoginPage = () => {
             localStorage.setItem('token', response.data.token);
             navigate('/admin/dashboard');
         } catch (err) {
-            setError('Invalid email or password');
+            setError(err.response?.data?.message || 'Login failed. Please check your credentials.');
         } finally {
             setLoading(false);
         }
