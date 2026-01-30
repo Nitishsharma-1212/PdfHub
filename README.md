@@ -23,13 +23,7 @@ A professional, full-stack PDF management suite built with **React**, **Node.js*
 - **Drag & Drop**: Seamless file uploads with real-time progress indicators.
 - **Privacy First**: Automated background cleanup removes processed files after 10 minutes.
 
----
 
-## 📸 Preview
-
-![App Mockup](mockup.png)
-
----
 
 ## 🛠️ Tech Stack
 
