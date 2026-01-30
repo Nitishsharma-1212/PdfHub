@@ -64,11 +64,18 @@ const Home = () => {
                         <div className="h-px flex-1 bg-slate-200 ml-8 hidden md:block"></div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
-                        {tools.map(tool => (
-                            <ToolCard key={tool._id} tool={tool} />
-                        ))}
-                    </div>
+                    {tools.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
+                            {tools.map(tool => (
+                                <ToolCard key={tool._id} tool={tool} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-20 bg-red-50 rounded-3xl border border-red-100">
+                            <p className="text-red-500 font-bold text-lg mb-2">Failed to load tools</p>
+                            <p className="text-slate-500">Please check your database connection or try refreshing.</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
