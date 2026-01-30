@@ -1,9 +1,9 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const morgan = require('morgan');
-const path = require('path');
 const fs = require('fs-extra');
 
 const authRoutes = require('./routes/auth');
@@ -16,12 +16,27 @@ const Settings = require('./models/Settings');
 const Admin = require('./models/Admin');
 
 const app = express();
+let dbConnectionError = null;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Health Check Endpoint
+app.get('/api/health', (req, res) => {
+    res.json({
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+        error: dbConnectionError ? dbConnectionError.message : null,
+        env: {
+            mongoUriConfigured: !!process.env.MONGODB_URI,
+            port: process.env.PORT
+        }
+    });
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -30,12 +45,17 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/pdf', pdfRoutes);
 
 // Database Connection
+console.log('Attempting to connect to MongoDB...');
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pdftoolshub')
     .then(async () => {
         console.log('Connected to MongoDB');
+        dbConnectionError = null;
         await seedDatabase();
     })
-    .catch(err => console.error('Could not connect to MongoDB', err));
+    .catch(err => {
+        console.error('Could not connect to MongoDB', err);
+        dbConnectionError = err;
+    });
 
 async function seedDatabase() {
     // Seed Settings
