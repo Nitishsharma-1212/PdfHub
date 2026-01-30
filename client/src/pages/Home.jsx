@@ -17,7 +17,9 @@ const Home = () => {
                 // Set error state to display to user
                 setTools([]);
                 // We'll use a hack here to pass the error message to the render
-                window.lastError = err.message || 'Unknown error';
+                const backendError = err.response?.data?.error;
+                const genericError = err.message || 'Unknown error';
+                window.lastError = backendError ? `Server Error: ${backendError}` : genericError;
             } finally {
                 setLoading(false);
             }

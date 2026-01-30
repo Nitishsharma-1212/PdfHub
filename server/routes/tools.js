@@ -1,9 +1,13 @@
-const express = require('express');
-const router = express.Router();
-const Tool = require('../models/Tool');
-const Settings = require('../models/Settings');
+const mongoose = require('mongoose');
 
 router.get('/', async (req, res) => {
+    // Check if database is connected
+    if (mongoose.connection.readyState !== 1) {
+        return res.status(503).json({
+            error: 'Database Disconnected. Please whitelist 0.0.0.0/0 in MongoDB Atlas Network Access.'
+        });
+    }
+
     try {
         let tools = await Tool.find({ enabled: true }).sort('order');
 
