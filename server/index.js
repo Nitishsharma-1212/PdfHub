@@ -38,26 +38,49 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// Database Connection Logic with Promise Caching for Serverless
+console.log('Attempting to connect to MongoDB...');
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://redhume:hkBF2wsTL8665@cluster0.2aund0h.mongodb.net/pdftoolshub';
+
+let connectionPromise = null;
+
+if (!connectionPromise) {
+    connectionPromise = mongoose.connect(MONGODB_URI)
+        .then(async () => {
+            console.log('Connected to MongoDB');
+            dbConnectionError = null;
+            await seedDatabase();
+            return mongoose.connection;
+        })
+        .catch(err => {
+            console.error('Could not connect to MongoDB', err);
+            dbConnectionError = err;
+            throw err;
+        });
+}
+
+// Middleware to Ensure DB Connection Before Routes
+app.use(async (req, res, next) => {
+    // Skip for health check or static files if needed, but safe to wait mostly
+    if (req.path === '/api/health') return next();
+
+    try {
+        await connectionPromise;
+        next();
+    } catch (err) {
+        console.error('DB Connection Middleware Error:', err);
+        res.status(503).json({
+            error: 'Database Connection Failed during startup.',
+            details: err.message
+        });
+    }
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/tools', toolRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/pdf', pdfRoutes);
-
-// Database Connection
-console.log('Attempting to connect to MongoDB...');
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://redhume:hkBF2wsTL8665@cluster0.2aund0h.mongodb.net/pdftoolshub';
-
-mongoose.connect(MONGODB_URI)
-    .then(async () => {
-        console.log('Connected to MongoDB');
-        dbConnectionError = null;
-        await seedDatabase();
-    })
-    .catch(err => {
-        console.error('Could not connect to MongoDB', err);
-        dbConnectionError = err;
-    });
 
 async function seedDatabase() {
     // Seed Settings
