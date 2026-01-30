@@ -21,8 +21,8 @@ const MergePage = () => {
         files.forEach(file => formData.append('pdfs', file));
 
         try {
-            const response = await axios.post('http://localhost:5000/api/pdf/merge', formData);
-            setDownloadUrl(`http://localhost:5000${response.data.downloadUrl}`);
+            const response = await axios.post('/api/pdf/merge', formData);
+            setDownloadUrl(`${response.data.downloadUrl}`);
         } catch (err) {
             setError(err.response?.data?.message || "An error occurred during processing.");
         } finally {

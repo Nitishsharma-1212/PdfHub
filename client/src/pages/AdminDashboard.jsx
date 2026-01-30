@@ -26,9 +26,9 @@ const AdminDashboard = () => {
         setLoading(true);
         try {
             const [toolsRes, settingsRes, logsRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/admin/tools', { headers }),
-                axios.get('http://localhost:5000/api/admin/settings', { headers }),
-                axios.get('http://localhost:5000/api/admin/logs', { headers })
+                axios.get('/api/admin/tools', { headers }),
+                axios.get('/api/admin/settings', { headers }),
+                axios.get('/api/admin/logs', { headers })
             ]);
             setTools(toolsRes.data);
             setSettings(settingsRes.data);
@@ -42,7 +42,7 @@ const AdminDashboard = () => {
 
     const toggleTool = async (id, enabled) => {
         try {
-            await axios.put(`http://localhost:5000/api/admin/tools/${id}`, { enabled: !enabled }, { headers });
+            await axios.put(`/api/admin/tools/${id}`, { enabled: !enabled }, { headers });
             setTools(tools.map(t => t._id === id ? { ...t, enabled: !enabled } : t));
         } catch (err) {
             console.error(err);
@@ -52,7 +52,7 @@ const AdminDashboard = () => {
     const updateSettings = async (e) => {
         e.preventDefault();
         try {
-            await axios.put('http://localhost:5000/api/admin/settings', settings, { headers });
+            await axios.put('/api/admin/settings', settings, { headers });
             alert('Settings updated successfully');
         } catch (err) {
             console.error(err);

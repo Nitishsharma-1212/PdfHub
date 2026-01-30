@@ -18,8 +18,8 @@ const CompressPage = () => {
         formData.append('pdf', files[0]);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/pdf/compress', formData);
-            setDownloadUrl(`http://localhost:5000${response.data.downloadUrl}`);
+            const response = await axios.post('/api/pdf/compress', formData);
+            setDownloadUrl(`${response.data.downloadUrl}`);
         } catch (err) {
             setError(err.response?.data?.message || "An error occurred during processing.");
         } finally {

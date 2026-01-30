@@ -20,8 +20,8 @@ const SplitPage = () => {
         formData.append('pages', pageRange);
 
         try {
-            const response = await axios.post('http://localhost:5000/api/pdf/split', formData);
-            setDownloadUrl(`http://localhost:5000${response.data.downloadUrl}`);
+            const response = await axios.post('/api/pdf/split', formData);
+            setDownloadUrl(`${response.data.downloadUrl}`);
         } catch (err) {
             setError(err.response?.data?.message || "An error occurred during processing.");
         } finally {
