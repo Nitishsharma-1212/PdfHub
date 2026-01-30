@@ -46,7 +46,9 @@ app.use('/api/pdf', pdfRoutes);
 
 // Database Connection
 console.log('Attempting to connect to MongoDB...');
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/pdftoolshub')
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://redhume:hkBF2wsTL8665@cluster0.2aund0h.mongodb.net/pdftoolshub';
+
+mongoose.connect(MONGODB_URI)
     .then(async () => {
         console.log('Connected to MongoDB');
         dbConnectionError = null;

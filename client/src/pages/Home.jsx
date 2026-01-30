@@ -14,6 +14,10 @@ const Home = () => {
                 setTools(response.data);
             } catch (err) {
                 console.error('Failed to fetch tools', err);
+                // Set error state to display to user
+                setTools([]);
+                // We'll use a hack here to pass the error message to the render
+                window.lastError = err.message || 'Unknown error';
             } finally {
                 setLoading(false);
             }
@@ -74,6 +78,7 @@ const Home = () => {
                         <div className="text-center py-20 bg-red-50 rounded-3xl border border-red-100">
                             <p className="text-red-500 font-bold text-lg mb-2">Failed to load tools</p>
                             <p className="text-slate-500">Please check your database connection or try refreshing.</p>
+                            <p className="text-xs text-red-400 mt-4 font-mono">{window.lastError}</p>
                         </div>
                     )}
                 </div>
