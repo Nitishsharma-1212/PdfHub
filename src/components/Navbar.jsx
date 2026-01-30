@@ -77,9 +77,6 @@ const Navbar = () => {
 
                     {/* Right Side Actions */}
                     <div className="hidden md:flex items-center gap-4">
-                        <Link to="/admin/login" className="text-sm font-bold text-slate-600 hover:text-primary transition-colors">
-                            Log in
-                        </Link>
                         <Link to="/" className="group relative px-6 py-2.5 rounded-full bg-primary text-white font-bold text-sm shadow-lg shadow-primary/30 transition-all duration-300 hover:shadow-primary/50 hover:-translate-y-0.5 hover:ring-2 hover:ring-primary/20 overflow-hidden">
                             <span className="relative z-10 flex items-center gap-2">
                                 Get Started <ChevronRight size={16} strokeWidth={3} />
@@ -129,9 +126,6 @@ const Navbar = () => {
                     <div className="h-px bg-slate-100 my-4" />
 
                     <div className="flex flex-col gap-4">
-                        <Link to="/admin/login" onClick={() => setIsOpen(false)} className="w-full py-4 rounded-xl text-center font-bold text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors">
-                            Log in
-                        </Link>
                         <Link to="/" onClick={() => setIsOpen(false)} className="w-full py-4 rounded-xl text-center font-bold text-white bg-primary shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all">
                             Get Started
                         </Link>

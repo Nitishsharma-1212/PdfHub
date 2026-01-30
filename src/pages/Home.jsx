@@ -8,23 +8,24 @@ const Home = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchTools = async () => {
-            try {
-                const response = await axios.get('/api/tools');
-                setTools(response.data);
-            } catch (err) {
-                console.error('Failed to fetch tools', err);
-                // Set error state to display to user
-                setTools([]);
-                // We'll use a hack here to pass the error message to the render
-                const backendError = err.response?.data?.error;
-                const genericError = err.message || 'Unknown error';
-                window.lastError = backendError ? `Server Error: ${backendError}` : genericError;
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchTools();
+        // Hardcoded tools to bypass database connection issues
+        const hardcodedTools = [
+            { _id: '1', name: 'Merge PDF', slug: 'merge-pdf', icon: 'Merge', description: 'Combine multiple PDFs into one document.', order: 1 },
+            { _id: '2', name: 'Split PDF', slug: 'split-pdf', icon: 'Scissors', description: 'Extract pages from your PDF or save each page as a separate PDF.', order: 2 },
+            { _id: '3', name: 'Compress PDF', slug: 'compress-pdf', icon: 'Minimize', description: 'Reduce the file size of your PDF while optimizing for maximal PDF quality.', order: 3 },
+            { _id: '4', name: 'Image to PDF', slug: 'img-to-pdf', icon: 'Image', description: 'Convert JPG and PNG images into a PDF document instantly.', order: 4 },
+            { _id: '5', name: 'PDF to Word', slug: 'pdf-to-word', icon: 'FileText', description: 'Convert your PDF to WORD documents with incredible accuracy.', order: 5 },
+            { _id: '6', name: 'PDF to PowerPoint', slug: 'pdf-to-ppt', icon: 'Presentation', description: 'Turn your PDF files into easy to edit PPT and PPTX slideshows.', order: 6 },
+            { _id: '7', name: 'PDF to Excel', slug: 'pdf-to-excel', icon: 'Sheet', description: 'Pull data straight from PDFs into Excel spreadsheets in a few short seconds.', order: 7 },
+            { _id: '8', name: 'Excel to PDF', slug: 'excel-to-pdf', icon: 'FileSpreadsheet', description: 'Convert Excel spreadsheets to PDF.', order: 8 },
+            { _id: '9', name: 'Edit PDF', slug: 'edit-pdf', icon: 'PenTool', description: 'Add text, shapes, images and freehand annotations to your PDF.', order: 9 },
+            { _id: '10', name: 'PDF to JPG', slug: 'pdf-to-jpg', icon: 'Image', description: 'Convert each PDF page into a JPG or extract all images contained in a PDF.', order: 10 },
+            { _id: '11', name: 'Unlock PDF', slug: 'unlock-pdf', icon: 'Unlock', description: 'Remove PDF password security, giving you the freedom to use your data as you want.', order: 11 },
+            { _id: '12', name: 'Protect PDF', slug: 'protect-pdf', icon: 'Lock', description: 'Protect PDF files with a password. Encrypt PDF documents to prevent unauthorized access.', order: 12 }
+        ];
+
+        setTools(hardcodedTools);
+        setLoading(false);
     }, []);
 
     if (loading) return (
