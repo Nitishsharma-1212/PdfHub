@@ -1,5 +1,6 @@
 # PDF Tools Hub 🚀
 
+view website :-https://pdfhub-gules.vercel.app/
 
 A professional, full-stack PDF management suite built with **React**, **Node.js**, and **MongoDB**. Designed to provide a seamless and premium experience for merging, splitting, and compressing PDF documents—all in one place.
 
@@ -22,14 +23,6 @@ A professional, full-stack PDF management suite built with **React**, **Node.js*
 - **Modern UI**: Sleek, minimalist design inspired by top-tier SaaS platforms.
 - **Drag & Drop**: Seamless file uploads with real-time progress indicators.
 - **Privacy First**: Automated background cleanup removes processed files after 10 minutes.
-
----
-
-## 📸 Preview
-
-![App Mockup](mockup.png)
-
----
 
 ## 🛠️ Tech Stack
 
